@@ -98,7 +98,6 @@ class PopularTab extends Component {
         // return <Text>{obj.full_name}</Text>
     }
 
-
     //加载数据
     loadData = () => {
         this.setState({isLoading: true});
