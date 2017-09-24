@@ -17,7 +17,9 @@ import {
 import NavigationBar from "../compoent/NavigationBar.js"
 import ScrollableTabView from "react-native-scrollable-tab-view"
 import ProjectRow from "../compoent/ProjectRow"
-
+/**
+ * 最热页面
+ */
 export default class PapularPage extends Component {
 
 

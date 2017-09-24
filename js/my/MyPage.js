@@ -13,6 +13,9 @@ import {
 }from 'react-native';
 
 import  NavigationBar from "../compoent/NavigationBar";
+/**
+ * 我的页面
+ */
 export default class MyPage extends Component {
 
 
@@ -23,7 +26,6 @@ export default class MyPage extends Component {
                 title="我的"/>
             <View style={{flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
                 <Text onPress={() => {
-                    console.log(`navigate=${navigate},onpress`)
                     navigate('Custom', {source: '自定义分类'});
                 }
                 }>自定义分类</Text>

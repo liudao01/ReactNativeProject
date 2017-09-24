@@ -13,7 +13,9 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
-
+/**
+ * 组件: 最热页面的item
+ */
 export default class ProjectRow extends Component {
 
     static defaultProps = {

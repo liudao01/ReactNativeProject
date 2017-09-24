@@ -9,7 +9,9 @@ import {
     View,
     Image
 } from 'react-native';
-
+/**
+ * 自定义分类页面
+ */
 export default class CustomKeyPage extends Component {
 
     render() {

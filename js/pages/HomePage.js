@@ -15,6 +15,9 @@ import PapularPage from './PapularPage';
 import MyPage from '../my/MyPage'
 //"最热"是包含在，HomePage页面
 //"最热"页面包含，NavigationBar
+/**
+ * 主页
+ */
 export default class Homepage extends Component {
 
     // 构造

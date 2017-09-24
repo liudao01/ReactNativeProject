@@ -12,7 +12,9 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
-
+/**
+ * 导航条
+ */
 export default class NavigationBar extends Component {
 
     static propTypes = {
