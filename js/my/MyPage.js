@@ -26,7 +26,7 @@ export default class MyPage extends Component {
                 title="我的"/>
             <View style={{flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
                 <Text onPress={() => {
-                    navigate('Custom', {source: '自定义分类'});
+                    navigate('CustomKeyPage', {source: '自定义分类'});
                 }
                 }>自定义分类</Text>
             </View>

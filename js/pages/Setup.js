@@ -20,10 +20,10 @@ const RouteConfigs = {
     Home: {//首页
         screen: Homepage,
     },
-    My: {//我的
+    MyPage: {//我的
         screen: MyPage,
     },
-    Custom: {//自定义分类
+    CustomKeyPage: {//自定义分类
         screen: CustomKeyPage,
     },
 }
