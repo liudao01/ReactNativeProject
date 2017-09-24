@@ -16,17 +16,17 @@ import  NavigationBar from "../compoent/NavigationBar";
 export default class MyPage extends Component {
 
 
-    //进行跳转
-    gotoCustomKey = () => {
-
-    }
-
     render() {
+        const {navigate} = this.props.navigation;
         return <View style={styles.container}>
             <NavigationBar
                 title="我的"/>
             <View style={{flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
-                <Text onPress={this.gotoCustomKey}>自定义分类</Text>
+                <Text onPress={() => {
+                    console.log(`navigate=${navigate},onpress`)
+                    navigate('Custom', {source: '自定义分类'});
+                }
+                }>自定义分类</Text>
             </View>
         </View>
     }

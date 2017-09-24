@@ -83,7 +83,7 @@ export default class Homepage extends Component {
                     onPress={() => this.setState({selectedTab: 'my'})}
                     title="我的">
 
-                    <MyPage/>
+                    <MyPage {...this.props}/>
                 </TabNavigator.Item>
 
             </TabNavigator>

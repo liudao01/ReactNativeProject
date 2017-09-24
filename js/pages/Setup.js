@@ -12,38 +12,29 @@ import {
 } from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import Homepage from "./HomePage";
+import MyPage from "../my/MyPage";
 import CustomKeyPage from "../my/CustomKeyPage";
 
+//各个页面路由配置
+const RouteConfigs = {
+    Home: {//首页
+        screen: Homepage,
+    },
+    My: {//我的
+        screen: MyPage,
+    },
+    Custom: {//自定义分类
+        screen: CustomKeyPage,
+    },
+}
 
-// 初始化路由
-/*const MyRoutes = {
- Homepage: {
- name: 'home',
- screen: Homepage,
- description: 'homepage'
- },
- CustomKeyPage: {
- name: 'customkey',
- screen: CustomKeyPage,
- description: 'customkey'
- }
- };*/
+//导航器的配置，包括导航器的初始页面、各个页面之间导航的动画、页面的配置选项等等
+const NavigatorConfig = {
+    initialRouteName: 'Home', // 默认显示界面
+    headerMode: 'none',//https://reactnavigation.org/docs/navigators/stack#StackNavigatorConfig
 
-//这里是导航器创建
+}
+
 //导航注册
-const Root = StackNavigator({
-    Home: {screen: Homepage},
-/*    Chat: { screen: ChatScreen },//新添加的页面*/
-});
-
-/*const MyPage = ({navigation}) => {
-    <View style={styles.container}>
-        <Homepage/>
-    </View>
-};*/
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    }
-});
-export default Root;
+const RootNavigator = StackNavigator(RouteConfigs, NavigatorConfig);
+export default RootNavigator;
