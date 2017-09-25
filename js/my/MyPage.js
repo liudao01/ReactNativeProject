@@ -19,16 +19,16 @@ import  NavigationBar from "../compoent/NavigationBar";
 export default class MyPage extends Component {
 
 
+    //navigation 里的方法有navigate 是用于页面跳转 goBack是用于页面返回
     render() {
-        const {navigate} = this.props.navigation;
+        const navigation = this.props.navigation.navigate;
         return <View style={styles.container}>
             <NavigationBar
                 title="我的"/>
             <View style={{flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
                 <Text onPress={() => {
-                    navigate('CustomKeyPage', {source: '自定义分类'});
-                }
-                }>自定义分类</Text>
+                    navigation('CustomKeyPage', {source: '自定义分类'});
+                }}>自定义分类</Text>
             </View>
         </View>
     }

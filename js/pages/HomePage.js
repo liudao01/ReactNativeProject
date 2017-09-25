@@ -27,7 +27,6 @@ export default class Homepage extends Component {
         this.state = {selectedTab: 'papular'};
     }
 
-
     render() {
 
         return <View style={styles.container}>
