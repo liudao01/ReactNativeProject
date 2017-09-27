@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     leftBtnStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 24
+        height: 30
     },
 });
 

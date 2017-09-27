@@ -89,7 +89,7 @@ class PopularTab extends Component {
      this.loadData();
      };*/
 
-    //和上面一样的效果
+    //和上面一样的效果  页面加载完成后加载数据
     componentDidMount = () => {
         this.loadData();
     }
