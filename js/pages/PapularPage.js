@@ -14,9 +14,9 @@ import {
     TouchableOpacity
 }from 'react-native';
 
-import NavigationBar from "../compoent/NavigationBar.js"
+import NavigationBar from "../compont/NavigationBar.js"
 import ScrollableTabView from "react-native-scrollable-tab-view"
-import ProjectRow from "../compoent/ProjectRow"
+import ProjectRow from "../compont/ProjectRow"
 /**
  * 最热页面
  */

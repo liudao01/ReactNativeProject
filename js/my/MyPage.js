@@ -12,7 +12,7 @@ import {
     RefreshControl
 }from 'react-native';
 
-import  NavigationBar from "../compoent/NavigationBar";
+import  NavigationBar from "../compont/NavigationBar";
 /**
  * 我的页面
  */
