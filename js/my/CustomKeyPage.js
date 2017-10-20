@@ -8,6 +8,7 @@ import {
     Text,
     View,
     Image,
+    Alert,
     AsyncStorage,
     TouchableOpacity
 } from 'react-native';
@@ -24,14 +25,22 @@ export default class CustomKeyPage extends Component {
         super(props);
         // 初始状态
         this.state = {
-            data: [{name: 'android', checked: true},
-                {name: 'IOS', checked: false}]
+            data: [ {"name":"Android","checked":true},
+                {"name":"IOS","checked":false},
+                {"name":"React","checked":true},
+                {"name":"Java","checked":true},
+                {"name":"JS","checked":true}]
         };
     }
 
     handleBack = () => {
+        this.doBack();
+    }
+
+    doBack = () => {
         this.props.navigation.goBack();
     }
+
     getLeftBtn = () => {
         return <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
@@ -62,19 +71,20 @@ export default class CustomKeyPage extends Component {
         //AsyncStorage是一个简单的、异步的、持久化的Key-Value存储系统
         AsyncStorage.setItem('custom_key', JSON.stringify(this.state.data))
             .then(() => this.refs.toast.show("保存成功"));
-        console.log(JSON.stringify(this.state.data));
+        // console.log(JSON.stringify(this.state.data));
+        this.doBack();
     }
 
     //CheckBox 点击  有个疑问为什么在这里设置值就可以不用setState就改变item的checked,因为是这样调用的()=>this.handlerCBClick(item)
     handleClick = (item) => {
-        console.log("之前 " + item.checked);
+        // console.log("之前 " + item.checked);
         item.checked = !item.checked;
-        console.log("之后 " + item.checked);
+        // console.log("之后 " + item.checked);
     }
     //渲染CheckBox  这里item就是一个对象
     renderCheckBox = (item) => {
-        console.log(item);
-        console.log(item.name + ',' + item.checked);
+        // console.log(item);
+        // console.log(item.name + ',' + item.checked);
         var leftText = item.name;
         return <CheckBox
             style={{flex: 1, padding: 10}}
@@ -125,7 +135,7 @@ export default class CustomKeyPage extends Component {
             .then(value => {
                 //有用户数据，选中该选中CheckBox
                 if (value !== null) {
-                    console.log(JSON.parse(value));
+                    // console.log(JSON.parse(value));
                     this.setState({data: JSON.parse(value)});
                 } else {
                     this.setState({
@@ -133,7 +143,7 @@ export default class CustomKeyPage extends Component {
                             {name: 'IOS', checked: true},
                             {name: 'React Native', checked: true},
                             {name: 'Java', checked: true},
-                            {name: 'JS', checked: false}]
+                            {name: 'JS', checked: true}]
                     });
                 }
             });
