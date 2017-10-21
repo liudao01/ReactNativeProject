@@ -11,7 +11,8 @@ import {
     Image,
     ListView,
     RefreshControl,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 }from 'react-native';
 
 import NavigationBar from "../compont/NavigationBar.js"
@@ -28,7 +29,13 @@ export default class PapularPage extends Component {
         super(props);
         // 初始状态
         this.state = {
-            languages: ["Android", "Ios", "Java", "React", "JS"]
+            languages: [
+                {name: 'Android'},
+                {name: 'IOS'},
+                {name: 'React'},
+                {name: 'Java'},
+                {name: 'JS'}
+            ]
         };
     }
 
@@ -36,13 +43,30 @@ export default class PapularPage extends Component {
         return <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity activeOpacity={0.7}>
                 <Image source={require('../../res/images/ic_search_white_48pt.png')}
-                       style={{width:24,height:24}}></Image>
+                       style={{width: 24, height: 24}}></Image>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7}>
                 <Image source={require('../../res/images/ic_more_vert_white_48pt.png')}
-                       style={{width:24,height:24}}></Image>
+                       style={{width: 24, height: 24}}></Image>
             </TouchableOpacity>
         </View>
+    }
+
+    loadLanguages = () => {
+        // AsyncStorage.clear();
+        AsyncStorage.getItem('custom_key')
+            .then((value) => {
+                console.log("读取的: " + value);
+                console.log("读取的: " + JSON.parse(value));
+                if (value != null) {
+                    this.setState({languages: JSON.parse(value)});
+
+                }
+            });
+    }
+
+    componentDidMount() {
+        this.loadLanguages();
     }
 
     render() {
@@ -57,7 +81,10 @@ export default class PapularPage extends Component {
                 tabBarUnderlineStyle={{backgroundColor: "#E7E7E7", height: 2}}>
                 {
                     this.state.languages.map((item, i) => {
-                        return <PopularTab key={`tab${i}`} tabLabel={item}/>
+                        console.log(item);
+                        return (item.checked == undefined || item.checked ?
+                            <PopularTab key={`tab${i}`} tabLabel={item.name}/> : null)
+
                     })
                 }
             </ScrollableTabView>

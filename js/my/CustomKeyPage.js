@@ -36,8 +36,6 @@ export default class CustomKeyPage extends Component {
     }
 
     handleBack = () => {
-        console.log(this.otherData);
-        console.log( this.state.data);
         if (ArrayUtil.isAbsEqual(this.otherData, this.state.data)) {
             this.doBack();
             return;
