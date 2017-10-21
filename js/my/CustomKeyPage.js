@@ -18,6 +18,8 @@ import {
 import NavigationBar from '../compont/NavigationBar';
 import CheckBox from 'react-native-check-box';
 import Toast from "react-native-easy-toast"
+import ArrayUtil from "../util/ArrayUtil";
+
 export default class CustomKeyPage extends Component {
 
     // 构造
@@ -25,19 +27,37 @@ export default class CustomKeyPage extends Component {
         super(props);
         // 初始状态
         this.state = {
-            data: [ {"name":"Android","checked":true},
-                {"name":"IOS","checked":false},
-                {"name":"React","checked":true},
-                {"name":"Java","checked":true},
-                {"name":"JS","checked":true}]
+            data: [{"name": "Android", "checked": true},
+                {"name": "IOS", "checked": false},
+                {"name": "ReactNative", "checked": true},
+                {"name": "Java", "checked": true},
+                {"name": "JS", "checked": true}],
         };
     }
 
     handleBack = () => {
-        this.doBack();
+        console.log(this.otherData);
+        console.log( this.state.data);
+        if (ArrayUtil.isAbsEqual(this.otherData, this.state.data)) {
+            this.doBack();
+            return;
+        }
+        Alert.alert("提示", "是否需要保存?", [
+            {
+                text: '是', onPress: () => {
+                this.handleSave()
+            }
+            },
+            {
+                text: '否', onPress: () => {
+                this.doBack()
+            }
+            },])
+
     }
 
     doBack = () => {
+
         this.props.navigation.goBack();
     }
 
@@ -79,7 +99,8 @@ export default class CustomKeyPage extends Component {
     handleClick = (item) => {
         // console.log("之前 " + item.checked);
         item.checked = !item.checked;
-        // console.log("之后 " + item.checked);
+        this.setState({isModified:true});//修改了
+
     }
     //渲染CheckBox  这里item就是一个对象
     renderCheckBox = (item) => {
@@ -137,15 +158,9 @@ export default class CustomKeyPage extends Component {
                 if (value !== null) {
                     // console.log(JSON.parse(value));
                     this.setState({data: JSON.parse(value)});
-                } else {
-                    this.setState({
-                        data: [{name: 'Android', checked: true},
-                            {name: 'IOS', checked: true},
-                            {name: 'React Native', checked: true},
-                            {name: 'Java', checked: true},
-                            {name: 'JS', checked: true}]
-                    });
                 }
+                //把原始数据克隆
+                this.otherData = ArrayUtil.clone(this.state.data);
             });
 
         // console.log(this.state.data);
