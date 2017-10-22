@@ -15,7 +15,7 @@ import {
 /**
  * 自定义分类页面
  */
-import NavigationBar from '../compont/NavigationBar';
+import NavigationBar from '../compoent/NavigationBar';
 import CheckBox from 'react-native-check-box';
 import Toast from "react-native-easy-toast"
 import ArrayUtil from "../util/ArrayUtil";

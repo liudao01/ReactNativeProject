@@ -12,7 +12,7 @@ import {
     RefreshControl
 }from 'react-native';
 
-import  NavigationBar from "../compont/NavigationBar";
+import  NavigationBar from "../compoent/NavigationBar";
 /**
  * 我的页面
  */
@@ -29,6 +29,9 @@ export default class MyPage extends Component {
                 <Text onPress={() => {
                     navigation('CustomKeyPage', {source: '自定义分类'});
                 }}>自定义分类</Text>
+                <Text onPress={() => {
+                    navigation('SortKeyPage', {source: '分类排序'});
+                }}>分类排序</Text>
             </View>
         </View>
     }

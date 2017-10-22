@@ -15,9 +15,9 @@ import {
     AsyncStorage
 }from 'react-native';
 
-import NavigationBar from "../compont/NavigationBar.js"
+import NavigationBar from "../compoent/NavigationBar.js"
 import ScrollableTabView from "react-native-scrollable-tab-view"
-import ProjectRow from "../compont/ProjectRow"
+import ProjectRow from "../compoent/ProjectRow"
 /**
  * 最热页面
  */
