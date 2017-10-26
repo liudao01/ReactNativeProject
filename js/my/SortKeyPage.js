@@ -16,7 +16,12 @@ import {
 
 import NavigationBar from "../compoent/NavigationBar";
 import SortableListView from "react-native-sortable-listview";
+import popular_def_lans from "../../res/data/popular_def_lans.json"
+import Toast from "react-native-easy-toast"
 
+/**
+ * 分类排序页面
+ */
 export default class SortKeyPage extends Component {
 
     // 构造
@@ -24,14 +29,55 @@ export default class SortKeyPage extends Component {
         super(props);
         // 初始状态
         this.state = {
+            originData: popular_def_lans,
             data: [],
         };
+        //初始化数据 把所有选中的数据放入进去
+        this.state.originData.forEach((item => {
+            if (item.checked) {
+                this.state.data.push(item)
+            }
+        }))
     }
 
 
     doBack = () => {
 
         this.props.navigation.goBack();
+    }
+    //保存
+    doSave = () => {
+
+        //原始数组
+        var originArray = this.state.originData;
+        //排序后的数组
+        var sortedArray = this.state.data;
+        //要保存的数组
+        var savedArray = [];
+
+        //i用来遍历originalArray
+        //j用来遍历sortedArray
+        for (var i = 0, j = 0; i < originArray.length; i++) {
+            var item = originArray[i];
+            if (item.checked) {
+                savedArray[i] = sortedArray[j];
+                j++;
+            } else {
+                savedArray[i] = item;
+            }
+        }
+
+        console.log("保存读取: ");
+        console.log(savedArray);
+        AsyncStorage.setItem("custom_key", JSON.stringify(savedArray))
+            .then(() => {
+                this.refs.toast.show("保存成功");
+                this.doBack();
+            })
+    }
+    //保存
+    handleSave = () => {
+        this.doSave();
     }
 
     getLeftBtn = () => {
@@ -45,19 +91,36 @@ export default class SortKeyPage extends Component {
         </View>;
     }
 
+
+    getRightBtn = () => {
+        return <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity
+                onPress={this.handleSave}
+                activeOpacity={0.7}>
+                <View style={{marginRight: 10}}>
+                    <Text style={{fontSize: 16, color: '#FFF'}}>保存</Text>
+                </View>
+            </TouchableOpacity>
+        </View>;
+    }
+
     componentDidMount() {
         AsyncStorage.getItem("custom_key")
             .then(value => {
+                console.log("进入读取: ");
+                console.log(value);
                 if (value != null) {
                     //只获取checked为true语言，进行排序  forEach 不会返回一个数组 而map会返回一个数组
                     let d = [];
-                    JSON.parse(value).forEach((item) => {
+                    let origin = JSON.parse(value);
+                    origin.forEach((item) => {
                         if (item.checked) {
                             d.push(item);
                         }
                     })
-                    this.setState({data: d});
-                    var myorder = Object.keys(this.state.data); //Array of keys
+                    // this.setState({data: d});
+                    // var myorder = Object.keys(this.state.data); //Array of keys
+                    this.setState({originData: origin, data: d});
                 }
             })
     }
@@ -65,9 +128,11 @@ export default class SortKeyPage extends Component {
 
     render() {
 
+        //http://www.w3school.com.cn/jsref/jsref_splice.asp   splice方法的使用
         return <View style={styles.container}>
             <NavigationBar
                 title="语言分类排序"
+                rightButton={this.getRightBtn()}
                 leftButton={this.getLeftBtn()}/>
 
             <SortableListView
@@ -80,8 +145,7 @@ export default class SortKeyPage extends Component {
                     this.forceUpdate();
                 }}
             />
-
-
+            <Toast ref="toast"/>
         </View>
     }
 }
