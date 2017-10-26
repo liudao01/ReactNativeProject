@@ -10,7 +10,8 @@ import {
     Image,
     Alert,
     AsyncStorage,
-    TouchableOpacity
+    TouchableOpacity,
+    DeviceEventEmitter
 } from 'react-native';
 /**
  * 自定义分类页面
@@ -91,6 +92,7 @@ export default class CustomKeyPage extends Component {
             .then(() => this.refs.toast.show("保存成功"));
         // console.log(JSON.stringify(this.state.data));
         this.doBack();
+        DeviceEventEmitter.emit("HOMEPAGE_RELOAD","HomePage重新加载");
     }
 
     //CheckBox 点击  有个疑问为什么在这里设置值就可以不用setState就改变item的checked,因为是这样调用的()=>this.handlerCBClick(item)

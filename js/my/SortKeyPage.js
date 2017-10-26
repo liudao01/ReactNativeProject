@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     AsyncStorage,
+    DeviceEventEmitter
 
 } from 'react-native';
 
@@ -67,12 +68,13 @@ export default class SortKeyPage extends Component {
             }
         }
 
-        console.log("保存读取: ");
-        console.log(savedArray);
+        // console.log("保存读取: ");
+        // console.log(savedArray);
         AsyncStorage.setItem("custom_key", JSON.stringify(savedArray))
             .then(() => {
                 this.refs.toast.show("保存成功");
                 this.doBack();
+                DeviceEventEmitter.emit("HOMEPAGE_RELOAD","HomePage重新加载");
             })
     }
     //保存
@@ -107,8 +109,8 @@ export default class SortKeyPage extends Component {
     componentDidMount() {
         AsyncStorage.getItem("custom_key")
             .then(value => {
-                console.log("进入读取: ");
-                console.log(value);
+                // console.log("进入读取: ");
+                // console.log(value);
                 if (value != null) {
                     //只获取checked为true语言，进行排序  forEach 不会返回一个数组 而map会返回一个数组
                     let d = [];

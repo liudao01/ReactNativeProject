@@ -7,17 +7,25 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    DeviceEventEmitter
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import TabNavigatorItem from "react-native-tab-navigator/TabNavigatorItem";
 import PapularPage from './PapularPage';
 import MyPage from '../my/MyPage'
+import {NavigationActions} from 'react-navigation'
 //"最热"是包含在，HomePage页面
 //"最热"页面包含，NavigationBar
 /**
  * 主页
  */
+const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'Home'})
+    ]
+})
 export default class Homepage extends Component {
 
     // 构造
@@ -25,6 +33,26 @@ export default class Homepage extends Component {
         super(props);
         // 初始状态
         this.state = {selectedTab: 'papular'};
+    }
+
+    componentDidMount() {
+        this.listener = DeviceEventEmitter.addListener('HOMEPAGE_RELOAD', (n) => {
+            //主页重新加载数据
+            console.log("主页重新加载数据");
+            // this.setState({selectedTab: 'papular'});
+            //跳转到新的场景，并且重置整个路由栈
+            this.props.navigation.dispatch(resetAction);
+
+            // this.props.navigation.resetTo({
+            //     component:Homepage
+            // })
+        })
+    }
+
+
+    componentWillUnmount() {
+        //移除监听
+        this.listener.remove();
     }
 
     render() {

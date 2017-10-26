@@ -56,8 +56,8 @@ export default class PapularPage extends Component {
         // AsyncStorage.clear();
         AsyncStorage.getItem('custom_key')
             .then((value) => {
-                console.log("读取的: " + value);
-                console.log("读取的: " + JSON.parse(value));
+                // console.log("读取的: " + value);
+                // console.log("读取的: " + JSON.parse(value));
                 if (value != null) {
                     this.setState({languages: JSON.parse(value)});
 
@@ -81,7 +81,7 @@ export default class PapularPage extends Component {
                 tabBarUnderlineStyle={{backgroundColor: "#E7E7E7", height: 2}}>
                 {
                     this.state.languages.map((item, i) => {
-                        console.log(item);
+                        // console.log(item);
                         return (item.checked == undefined || item.checked ?
                             <PopularTab key={`tab${i}`} tabLabel={item.name}/> : null)
 
