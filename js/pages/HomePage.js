@@ -38,7 +38,7 @@ export default class Homepage extends Component {
     componentDidMount() {
         this.listener = DeviceEventEmitter.addListener('HOMEPAGE_RELOAD', (n) => {
             //主页重新加载数据
-            console.log("主页重新加载数据");
+            // console.log("主页重新加载数据");
             // this.setState({selectedTab: 'papular'});
             //跳转到新的场景，并且重置整个路由栈
             this.props.navigation.dispatch(resetAction);
@@ -71,7 +71,7 @@ export default class Homepage extends Component {
                     onPress={() => this.setState({selectedTab: 'papular'})}>
 
                     {/*最热的内容*/}
-                    <PapularPage/>
+                    <PapularPage {...this.props}/>
                 </TabNavigator.Item>
 
                 <TabNavigator.Item

@@ -15,6 +15,7 @@ import Homepage from "./HomePage";
 import MyPage from "../my/MyPage";
 import CustomKeyPage from "../my/CustomKeyPage";
 import SortKeyPage from "../my/SortKeyPage"
+import ProjectDetails from "./ProjectDetails"
 
 //各个页面路由配置
 const RouteConfigs = {
@@ -29,6 +30,9 @@ const RouteConfigs = {
     },
     SortKeyPage: {//自定义分类 排序
         screen: SortKeyPage,
+    },
+    ProjectDetails: {//项目详情
+        screen: ProjectDetails,
     },
 }
 

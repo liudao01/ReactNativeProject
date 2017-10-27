@@ -21,6 +21,9 @@ import ProjectRow from "../compoent/ProjectRow"
 /**
  * 最热页面
  */
+
+var popular_def_lans = require('../../res/data/popular_def_lans.json');
+
 export default class PapularPage extends Component {
 
 
@@ -29,14 +32,12 @@ export default class PapularPage extends Component {
         super(props);
         // 初始状态
         this.state = {
-            languages: [
-                {name: 'Android'},
-                {name: 'IOS'},
-                {name: 'React'},
-                {name: 'Java'},
-                {name: 'JS'}
-            ]
+            languages: []
         };
+        popular_def_lans.forEach(item => {
+            if (item.checked) this.state.languages.push(item);
+        });
+
     }
 
     getRightBtn = () => {
@@ -60,7 +61,6 @@ export default class PapularPage extends Component {
                 // console.log("读取的: " + JSON.parse(value));
                 if (value != null) {
                     this.setState({languages: JSON.parse(value)});
-
                 }
             });
     }
@@ -83,7 +83,7 @@ export default class PapularPage extends Component {
                     this.state.languages.map((item, i) => {
                         // console.log(item);
                         return (item.checked == undefined || item.checked ?
-                            <PopularTab key={`tab${i}`} tabLabel={item.name}/> : null)
+                            <PopularTab {...this.props} key={`tab${i}`} tabLabel={item.name}/> : null)
 
                     })
                 }
@@ -101,6 +101,7 @@ class PopularTab extends Component {
     // 构造
     constructor(props) {
         super(props);
+        const {navigation} = this.props;
         // 初始状态
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),//是一个优化，节省无用的UI渲染 判断前后数据是否改变 如果改变就更新
@@ -123,9 +124,21 @@ class PopularTab extends Component {
 
     //渲染ListView的每一行
     renderRow = (obj) => {
-        return <ProjectRow item={obj}></ProjectRow>
+        return <ProjectRow {...this.props} item={obj} onSelect={() => this.handleProjectSelect(obj)}></ProjectRow>
+
         // return <Text>{obj.full_name}</Text>
     }
+
+    handleProjectSelect = (obj) => {
+        const navigation = this.props.navigation.navigate;
+        navigation('ProjectDetails', {
+            params: {
+                title: obj.full_name,
+                url: obj.html_url
+            },
+        });
+    }
+
 
     //加载数据
     loadData = () => {
