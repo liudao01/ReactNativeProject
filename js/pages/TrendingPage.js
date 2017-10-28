@@ -3,22 +3,21 @@
  */
 import React, {Component} from 'react';
 import {
+    AppRegistry,
     StyleSheet,
     Text,
     View,
     Image,
-    TouchableOpacity,
-    TouchableHighlight,
-    AsyncStorage,
     ListView,
-    DeviceEventEmitter,
-    AppRegistry,
-    RefreshControl
+    RefreshControl,
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native';
 import NavigationBar from '../compoent/NavigationBar'
 import ScrollableTabView from "react-native-scrollable-tab-view"
 import TrendingProjectRow from '../compoent/TrendingProjectRow'
 import GitHubTrending from 'GitHubTrending';
+import Popover from '../compoent/Popover'
 var popular_def_lans = require('../../res/data/popular_def_lans.json');
 
 export default class TrendingPage extends Component {
@@ -28,7 +27,9 @@ export default class TrendingPage extends Component {
         super(props);
         // 初始状态
         this.state = {
-            languages: []
+            languages: [],
+            isVisible: false,
+            buttonRect: {},
         };
         popular_def_lans.forEach(item => {
             if (item.checked) this.state.languages.push(item);
@@ -37,8 +38,9 @@ export default class TrendingPage extends Component {
     }
 
     renderTitle = () => {
-        return <TouchableOpacity
-            activeOpacity={0.5}>
+        return <TouchableOpacity ref="button"
+                                 onPress={this.showPopover}
+                                 activeOpacity={0.5}>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{color: '#FFF', fontsize: 16}}>趋势</Text>
                 <Image source={require('../../res/images/ic_spinner_triangle.png')}
@@ -46,6 +48,21 @@ export default class TrendingPage extends Component {
             </View>
         </TouchableOpacity>
     }
+    showPopover = () => {
+        console.log(this.refs);
+        this.refs.button.measure((ox, oy, width, height, px, py) => {
+            this.setState({
+                isVisible: true,
+                buttonRect: {x: px, y: py, width: width, height: height}
+            });
+        });
+    }
+
+    closePopover = () => {
+        this.setState({isVisible: false});
+    }
+
+
     loadLanguages = () => {
         // AsyncStorage.clear();
         AsyncStorage.getItem('custom_key')
@@ -80,6 +97,12 @@ export default class TrendingPage extends Component {
                     })
                 }
             </ScrollableTabView>
+            <Popover
+                isVisible={this.state.isVisible}
+                fromRect={this.state.buttonRect}
+                onClose={this.closePopover}>
+                <Text>I'm the content of this popover!</Text>
+            </Popover>
         </View>
     }
 }
@@ -145,7 +168,7 @@ class TrendingTab extends Component {
         this.setState({isLoading: true});
         new GitHubTrending().fetchTrending(`https://github.com/trending/${this.props.tabLabel}?since=daily`)
             .then(value => {
-                console.log(value);
+                // console.log(value);
                 //更新dataSource
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(value),
