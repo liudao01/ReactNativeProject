@@ -16,6 +16,7 @@ import MyPage from "../my/MyPage";
 import CustomKeyPage from "../my/CustomKeyPage";
 import SortKeyPage from "../my/SortKeyPage"
 import ProjectDetails from "./ProjectDetails"
+import TrendingPage from "./TrendingPage"
 
 //各个页面路由配置
 const RouteConfigs = {
@@ -33,6 +34,9 @@ const RouteConfigs = {
     },
     ProjectDetails: {//项目详情
         screen: ProjectDetails,
+    },
+    TrendingPage: {//项目详情
+        screen: TrendingPage,
     },
 }
 

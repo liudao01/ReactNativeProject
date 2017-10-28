@@ -58,7 +58,6 @@ export default class ProjectDetails extends Component {
         const {state} = this.props.navigation;
         let title = state.params.params.title;
         let url = state.params.params.url;
-        console.log("打印" + url);
         return (
             <View style={styles.container}>
                 <NavigationBar

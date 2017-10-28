@@ -14,6 +14,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import TabNavigatorItem from "react-native-tab-navigator/TabNavigatorItem";
 import PapularPage from './PapularPage';
 import MyPage from '../my/MyPage'
+import TrendingPage from './TrendingPage'
 import {NavigationActions} from 'react-navigation'
 //"最热"是包含在，HomePage页面
 //"最热"页面包含，NavigationBar
@@ -23,9 +24,10 @@ import {NavigationActions} from 'react-navigation'
 const resetAction = NavigationActions.reset({
     index: 0,
     actions: [
-        NavigationActions.navigate({ routeName: 'Home'})
+        NavigationActions.navigate({routeName: 'Home'})
     ]
 })
+
 export default class Homepage extends Component {
 
     // 构造
@@ -85,7 +87,7 @@ export default class Homepage extends Component {
                     onPress={() => this.setState({selectedTab: 'trending'})}
                     title="趋势">
 
-                    <View style={{backgroundColor: '#0F0', flex: 1}}/>
+                    <TrendingPage {...this.props}/>
                 </TabNavigator.Item>
 
                 <TabNavigator.Item

@@ -20,7 +20,18 @@ export default class NavigationBar extends Component {
     static propTypes = {
         //验证，不传element组件类型，会报错提示
         rightButton: PropTypes.element,
-        leftButton: PropTypes.element
+        leftButton: PropTypes.element,
+        titleView: PropTypes.element
+    }
+
+    //渲染顶部title
+    renderTitle = () => {
+        let view = (this.props.title != undefined && this.props.title.length != 0) ? (
+            <Text style={styles.title}>{this.props.title}</Text>) : this.props.titleView;
+
+        return <View style={styles.titleWrapper}>
+            {view}
+        </View>
     }
 
     render() {
@@ -33,9 +44,7 @@ export default class NavigationBar extends Component {
                 <View style={styles.leftBtnStyle}>
                     {this.props.leftButton}
                 </View>
-                <View style={styles.titleWrapper}>
-                    <Text style={styles.title}>{this.props.title}</Text>
-                </View>
+                {this.renderTitle()}
                 <View style={styles.rightBar}>
                     {this.props.rightButton}
                 </View>

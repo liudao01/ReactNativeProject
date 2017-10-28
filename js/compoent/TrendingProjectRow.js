@@ -16,12 +16,23 @@ import {
 /**
  * 组件: 最热页面的item
  */
-export default class ProjectRow extends Component {
+export default class TrendingProjectRow extends Component {
 
     static defaultProps = {
         item: {}
     }
 
+
+    renderContributors(data) {
+        var views = [];
+        for (var i = 0; i < data.length; i++) {
+            views.push(<Image style={{width: 22, height: 22}} source={{uri: data[i]}}/>);
+            if (i > 1) {
+                break;
+            }
+        }
+        return views;
+    }
 
     render() {
         var item = this.props.item;
@@ -34,12 +45,11 @@ export default class ProjectRow extends Component {
                 <View style={styles.bottom}>
                     <View style={styles.bottomTextWrapper}>
                         <Text>作者:</Text>
-                        {/* {console.log(item.owner.avatar_url)}*/}
-                        <Image style={{width: 22, height: 22}} source={{uri: item.owner.avatar_url}}/>
+                        {this.renderContributors(item.contributors)}
                     </View>
                     <View style={styles.bottomTextWrapper}>
                         <Text>star:</Text>
-                        <Text>{item.stargazers_count}</Text>
+                        <Text>{item.meta}</Text>
                     </View>
                     <Image source={require("../../res/images/ic_unstar_transparent.png")}
                            style={{width: 22, height: 22}}/>
