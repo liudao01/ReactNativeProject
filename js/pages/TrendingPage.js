@@ -48,7 +48,7 @@ export default class TrendingPage extends Component {
                                  onPress={this.showPopover}
                                  activeOpacity={0.5}>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{color: '#FFF', fontsize: 16}}>趋势</Text>
+                <Text style={{color: '#FFF', fontsize: 16}}>趋势 {this.state.timeSpan.key}</Text>
                 <Image source={require('../../res/images/ic_spinner_triangle.png')}
                        style={{width: 12, height: 12, marginLeft: 5}}/>
             </View>
@@ -118,7 +118,8 @@ export default class TrendingPage extends Component {
                     this.state.languages.map((item, i) => {
                         // console.log(item);
                         return (item.checked == undefined || item.checked ?
-                            <TrendingTab {...this.props} key={`tab${i}`} tabLabel={item.name}/> : null)
+                            <TrendingTab {...this.props} key={`tab${i}`} tabLabel={item.name}
+                                         timeSpan={this.state.timeSpan}/> : null)
                     })
                 }
             </ScrollableTabView>
@@ -146,6 +147,7 @@ class TrendingTab extends Component {
     //这里是Tab 的名字
     static defaultProps = {
         tabLabel: 'IOS',
+        // timeSpan: 'since=daily'
     }
     // 构造
     constructor(props) {
@@ -210,9 +212,17 @@ class TrendingTab extends Component {
         this.loadData();
     }
 
+    //当属性更新的时候
     componentWillReceiveProps(nextprops) {
+        // console.log(nextprops.timeSpan);
+
+        if (nextprops.timeSpan.key != this.props.timeSpan.key) {
+            this.loadData(nextprops.timeSpan.value);
+        }
+
 
     }
+
     render() {
         return <View style={styles.container}>
             <ListView
