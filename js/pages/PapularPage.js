@@ -57,7 +57,7 @@ export default class PapularPage extends Component {
         // AsyncStorage.clear();
         AsyncStorage.getItem('custom_key')
             .then((value) => {
-                console.log("读取的: " + value);
+                // console.log("读取的: " + value);
                 // console.log("读取的: " + JSON.parse(value));
                 if (value != null) {
                     this.setState({languages: JSON.parse(value)});

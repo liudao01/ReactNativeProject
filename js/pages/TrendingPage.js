@@ -20,6 +20,12 @@ import GitHubTrending from 'GitHubTrending';
 import Popover from '../compoent/Popover'
 var popular_def_lans = require('../../res/data/popular_def_lans.json');
 
+const TIME_MAP = new Map([
+    ["今 天", "since=daily"],
+    ["本 周", "since=weekly"],
+    ["本 月", "since=monthly"]
+]);
+
 export default class TrendingPage extends Component {
 
     // 构造
@@ -30,11 +36,11 @@ export default class TrendingPage extends Component {
             languages: [],
             isVisible: false,
             buttonRect: {},
+            timeSpan: {key: '今天', value: "since=daily"}
         };
         popular_def_lans.forEach(item => {
             if (item.checked) this.state.languages.push(item);
         });
-
     }
 
     renderTitle = () => {
@@ -49,7 +55,7 @@ export default class TrendingPage extends Component {
         </TouchableOpacity>
     }
     showPopover = () => {
-        console.log(this.refs);
+        // console.log(this.refs);
         this.refs.button.measure((ox, oy, width, height, px, py) => {
             this.setState({
                 isVisible: true,
@@ -79,6 +85,25 @@ export default class TrendingPage extends Component {
         this.loadLanguages();
     }
 
+    handleTimeSelect = (k, v) => {
+        this.setState({
+            timeSpan: {key: k, value: v}
+        })
+        this.closePopover();
+    }
+
+    renderTimeMap = () => {
+        var views = [];
+        for (let [key, value] of TIME_MAP) {
+            views.push(<TouchableOpacity key={`pop_${value}`} onPress={() => this.handleTimeSelect(key, value)}>
+                <Text style={{fontsize: 18, color: '#FFF', paddin: 8, margin: 8}}>{key}</Text>
+            </TouchableOpacity>)
+        }
+        return <View style={{alignItems: 'center'}}>
+            {views}
+        </View>
+    }
+
     render() {
         return <View style={styles.container}>
             <NavigationBar
@@ -100,8 +125,10 @@ export default class TrendingPage extends Component {
             <Popover
                 isVisible={this.state.isVisible}
                 fromRect={this.state.buttonRect}
+                contentStyle={{backgroundColor: '#343434', opacity: 0.8}}
+                placement="bottom"
                 onClose={this.closePopover}>
-                <Text>I'm the content of this popover!</Text>
+                {this.renderTimeMap()}
             </Popover>
         </View>
     }
@@ -164,9 +191,9 @@ class TrendingTab extends Component {
 
 
     //加载数据
-    loadData = () => {
+    loadData = (time = 'since=daily') => {
         this.setState({isLoading: true});
-        new GitHubTrending().fetchTrending(`https://github.com/trending/${this.props.tabLabel}?since=daily`)
+        new GitHubTrending().fetchTrending(`https://github.com/trending/${this.props.tabLabel}?${time}`)
             .then(value => {
                 // console.log(value);
                 //更新dataSource
@@ -183,6 +210,9 @@ class TrendingTab extends Component {
         this.loadData();
     }
 
+    componentWillReceiveProps(nextprops) {
+
+    }
     render() {
         return <View style={styles.container}>
             <ListView
